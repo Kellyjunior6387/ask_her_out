@@ -8,20 +8,28 @@
   background-color: var(--accent-primary);
   color: white;
   border: none;
-  font-size: 0.7rem;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(255, 122, 162, 0.4);
   transition: all 0.3s ease;
   z-index: 100;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
-  text-align: center;
-  line-height: 1.2;
   padding: 0;
-  white-space: pre-line;
+  gap: 0.25rem;
+}
+
+.music-button-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.music-button-text {
+  font-size: 0.65rem;
+  line-height: 1;
 }
 
 .music-button:hover {
@@ -39,7 +47,14 @@
     height: 50px;
     bottom: 1.5rem;
     right: 1.5rem;
-    font-size: 0.65rem;
+  }
+
+  .music-button-icon {
+    font-size: 1.2rem;
+  }
+
+  .music-button-text {
+    font-size: 0.6rem;
   }
 }
 
@@ -49,6 +64,13 @@
     height: 45px;
     bottom: 1rem;
     right: 1rem;
-    font-size: 0.6rem;
+  }
+
+  .music-button-icon {
+    font-size: 1rem;
+  }
+
+  .music-button-text {
+    font-size: 0.55rem;
   }
 }

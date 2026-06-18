@@ -13,7 +13,10 @@ export default function MusicPlayer({ isPlaying, onToggle }: MusicPlayerProps) {
       title={isPlaying ? 'Pause soundtrack' : 'Play soundtrack'}
       aria-label={isPlaying ? 'Pause soundtrack' : 'Play soundtrack'}
     >
-      {isPlaying ? '🎵\nPause' : '🎵\nPlay'}
+      <span className="music-button-icon">🎵</span>
+      <span className="music-button-text">
+        {isPlaying ? 'Pause' : 'Play'}
+      </span>
     </button>
   )
 }

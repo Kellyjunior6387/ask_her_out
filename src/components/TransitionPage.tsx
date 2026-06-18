@@ -29,11 +29,9 @@ export default function TransitionPage({ onNext }: TransitionPageProps) {
   return (
     <div className="transition-page">
       <div className="transition-card">
-        {stage >= 0 && (
-          <h1 className={`transition-text main ${stage >= 0 ? 'visible' : ''}`}>
-            So...
-          </h1>
-        )}
+        <h1 className={`transition-text main visible`}>
+          So...
+        </h1>
         {stage >= 1 && (
           <p className={`transition-text secondary ${stage >= 1 ? 'visible' : ''}`}>
             I've been thinking.
