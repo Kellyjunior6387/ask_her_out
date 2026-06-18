@@ -2,30 +2,27 @@ import { useState, useRef, useEffect } from 'react'
 import './App.css'
 import LandingPage from './components/LandingPage'
 import OurStory from './components/OurStory'
-import MemoryBoard from './components/MemoryBoard'
 import TransitionPage from './components/TransitionPage'
 import TheQuestion from './components/TheQuestion'
 import SuccessState from './components/SuccessState'
 import FloatingHearts from './components/FloatingHearts'
-import MusicPlayer from './components/MusicPlayer'
 
-type Section = 'landing' | 'story' | 'memory' | 'transition' | 'question' | 'success'
+type Section = 'landing' | 'story' | 'transition' | 'question' | 'success'
 
 function App() {
   const [currentSection, setCurrentSection] = useState<Section>('landing')
-  const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const hasPlayedRef = useRef(false)
   const sectionRefs = useRef<Record<Section, HTMLDivElement | null>>({
     landing: null,
     story: null,
-    memory: null,
     transition: null,
     question: null,
     success: null
   })
 
-  const sections: Section[] = ['landing', 'story', 'memory', 'transition', 'question', 'success']
+  const sections: Section[] = ['landing', 'story', 'transition', 'question', 'success']
   const currentIndex = sections.indexOf(currentSection)
   const progressPercentage = ((currentIndex) / (sections.length - 1)) * 100
 
@@ -33,6 +30,15 @@ function App() {
     if (currentIndex < sections.length - 1) {
       const nextSection = sections[currentIndex + 1]
       setCurrentSection(nextSection)
+      
+      // Play music on first continue (from landing page)
+      if (!hasPlayedRef.current && audioRef.current) {
+        audioRef.current.play().catch(() => {
+          // Autoplay might be blocked by browser
+        })
+        hasPlayedRef.current = true
+      }
+      
       // Scroll to the actual section element for more reliable positioning
       setTimeout(() => {
         const sectionEl = sectionRefs.current[nextSection]
@@ -53,27 +59,12 @@ function App() {
     }, 0)
   }
 
-  const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play().catch(() => {
-          // Autoplay might be blocked by browser
-          setIsPlaying(false)
-        })
-      }
-      setIsPlaying(!isPlaying)
-    }
-  }
-
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
 
-    const handleEnded = () => setIsPlaying(false)
-    audio.addEventListener('ended', handleEnded)
-    return () => audio.removeEventListener('ended', handleEnded)
+    audio.loop = true
+    return () => {}
   }, [])
 
   return (
@@ -102,14 +93,6 @@ function App() {
         <div
           className="section"
           ref={(el) => {
-            if (el) sectionRefs.current['memory'] = el
-          }}
-        >
-          <MemoryBoard onNext={handleNext} />
-        </div>
-        <div
-          className="section"
-          ref={(el) => {
             if (el) sectionRefs.current['transition'] = el
           }}
         >
@@ -134,7 +117,6 @@ function App() {
       </div>
 
       <FloatingHearts />
-      <MusicPlayer isPlaying={isPlaying} onToggle={toggleMusic} />
       <audio
         ref={audioRef}
         loop

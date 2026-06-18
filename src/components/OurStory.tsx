@@ -9,7 +9,7 @@ export default function OurStory({ onNext }: OurStoryProps) {
   const [revealedIndex, setRevealedIndex] = useState(0)
 
   const statements = [
-    "We met because of school.",
+    "We met on IG.",
     "Then somehow there was Coast.",
     "Then brownies happened.",
     "Then a lot more talking happened.",
