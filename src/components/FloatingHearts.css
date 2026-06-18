@@ -1,0 +1,24 @@
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  font-size: 1.5rem;
+  animation: floatHeart 4s ease-in forwards;
+  animation-delay: var(--delay);
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .heart {
+    font-size: 1.2rem;
+  }
+}
